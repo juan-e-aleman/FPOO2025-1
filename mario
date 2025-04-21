@@ -1,0 +1,69 @@
+# Clase base general
+class Juego:
+    def __init__(self, nombre, posicion):
+        self.nombre = nombre
+        self.posicion = posicion  # posición como tupla (X, Y)
+
+    def mover(self, nueva_posicion):
+        self.posicion = nueva_posicion
+
+    def __str__(self):
+        return f"{self.nombre} en posición {self.posicion}"
+
+# Clase Poder
+class Poder:
+    def __init__(self, nombre, descripcion):
+        self.nombre = nombre
+        self.descripcion = descripcion
+
+    def __str__(self):
+        return f"Poder: {self.nombre} - {self.descripcion}"
+
+# Clase Jugador que hereda de Juego
+class Jugador(Juego):
+    def __init__(self, nombre, posicion, vidas):
+        super().__init__(nombre, posicion)
+        self.vidas = vidas
+        self.poderes = []
+
+    def agregar_poder(self, poder):
+        self.poderes.append(poder)
+
+    def __str__(self):
+        info = f"Jugador: {self.nombre}\nVidas: {self.vidas}\nPosición: {self.posicion}\nPoderes:"
+        for poder in self.poderes:
+            info += f"\n  - {poder}"
+        return info
+
+# Clase Enemigo que hereda de Juego
+class Enemigo(Juego):
+    def __init__(self, nombre, posicion, tipo):
+        super().__init__(nombre, posicion)
+        self.tipo = tipo
+
+    def __str__(self):
+        return f"Enemigo: {self.nombre} (Tipo: {self.tipo}) en {self.posicion}"
+
+# Programa principal
+# Crear jugador
+mario = Jugador("Mario", (0, 0), 3)
+
+# Crear enemigos
+enemigo1 = Enemigo("Goomba1", (5, 2), "Goomba")
+enemigo2 = Enemigo("Koopa1", (8, 3), "Koopa")
+enemigos = [enemigo1, enemigo2]
+
+# Crear poderes
+poder1 = Poder("Fuego", "Lanza bolas de fuego")
+poder2 = Poder("Estrella", "Invencibilidad por tiempo limitado")
+mario.agregar_poder(poder1)
+mario.agregar_poder(poder2)
+
+# Mover al jugador
+mario.mover((2, 4))
+
+# Mostrar información
+print(mario)
+print("\nEnemigos:")
+for enemigo in enemigos:
+    print(enemigo)
